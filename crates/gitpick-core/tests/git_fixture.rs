@@ -97,16 +97,17 @@ fn git_fixture_checks_ignore_without_touching_file_content() -> io::Result<()> {
 fn git_fixture_can_detect_a_non_repository() -> io::Result<()> {
     let repo = GitFixture::new()?;
     let outside = repo.path().parent().expect("fixture has parent");
-    let args = vec![
-        OsString::from("-C"),
-        outside.as_os_str().to_os_string(),
-        OsString::from("rev-parse"),
-        OsString::from("--is-inside-work-tree"),
-    ];
-    let output = SystemProcessRunner.run(OsStr::new("git"), &args, outside)?;
-    // Do not assume the OS temp directory is never itself inside a repository.
-    // The primary assertion is that the adapter returns an exit status rather
-    // than interpreting paths as a shell command.
-    assert!(output.status.code().is_some());
+    let output = std::process::Command::new("git")
+        .args(["-C"])
+        .arg(outside)
+        .args(["rev-parse", "--show-toplevel"])
+        // Stop discovery at the disposable fixture's parent, even if the
+        // developer happens to use a temp directory below another repository.
+        .env("GIT_CEILING_DIRECTORIES", outside)
+        .env_remove("GIT_DIR")
+        .env_remove("GIT_WORK_TREE")
+        .env_remove("GIT_INDEX_FILE")
+        .output()?;
+    assert!(!output.status.success());
     Ok(())
 }
