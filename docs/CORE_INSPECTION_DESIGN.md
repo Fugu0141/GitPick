@@ -45,7 +45,8 @@ scan() -> Vec<SelectionInspection> （順序は入力順、リポジトリ別に
 | `worktree_change` | **ファイルのみ**: porcelain の staged / unstaged / rename 等。フォルダーは not-scanned |
 | `ignore` | excluded / reincluded / non-matching / failed、根拠のルール・元ファイル・行番号、および追跡状態と独立の除外候補フラグ |
 | `attributes` | 実際の filter / diff / merge / text 属性と値。フォルダー配下の属性は集約しない |
-| `descendants` | フォルダーの配下集約状態。MVPでは必ず `not-scanned`（`mixed` や件数を推測しない） |\n| `warnings` | tracked, LFS 未利用、境界が曖昧等の注意 |
+| `descendants` | フォルダーの配下集約状態。MVPでは必ず `not-scanned`（`mixed` や件数を推測しない） |
+| `warnings` | tracked, LFS 未利用、境界が曖昧等の注意 |
 
 `ignored=true` と `tracked=true` が同時に成立する場合がある。UI は1つの単純なステータスに潰さない。LFS属性の有効性と LFS バイナリの導入可否も別々に返す。
 
