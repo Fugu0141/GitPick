@@ -43,6 +43,8 @@ CLI (`gitpick scan`, `gitpick plan`, `gitpick apply`) は UI とは独立して 
 3. **Core**: パス検証、状態判定、実行計画作成、変更検証、ファイル更新。Windows 固有 API に依存させない方針。
 4. **Git adapter**: 引数配列で `git` / `git lfs` を呼び出す。シェル文字列を経由しない。結果は NUL 区切り形式で読む。バージョン・実行失敗を識別する。
 
+設計詳細: [Git状態取得の契約](CORE_INSPECTION_DESIGN.md)（Issue #4）。
+
 ## 想定するデータ契約
 
 `Selection`: 入力パスの一覧、希望操作（ignore / lfs / remove / inspect）。
