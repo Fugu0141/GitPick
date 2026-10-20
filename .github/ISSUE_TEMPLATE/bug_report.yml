@@ -1,0 +1,30 @@
+name: Bug report
+description: GitPick の不具合を報告する（機密情報は含めないでください）
+title: "bug: "
+body:
+  - type: markdown
+    attributes:
+      value: "GitPick は設計段階です。再現可能な情報をお願いします。個人情報・機密パスは掲載しないでください。"
+  - type: textarea
+    id: problem
+    attributes:
+      label: 発生した問題
+      description: 期待した結果と実際の結果を記載してください
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: 再現手順
+      description: ダミーのファイル名と再現用リポジトリで説明してください
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: 環境
+      description: Windows、Git、Git LFS、GitPick のバージョン
+  - type: textarea
+    id: notes
+    attributes:
+      label: 追加情報（任意）

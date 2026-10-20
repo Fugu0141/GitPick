@@ -1,0 +1,24 @@
+# Build outputs
+/target/
+/build/
+/out/
+/dist/
+/.vs/
+/.idea/
+
+# IDE & user-specific settings
+*.user
+*.suo
+*.rsuser
+.vscode/*
+!.vscode/extensions.json
+
+# OS temporary files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake

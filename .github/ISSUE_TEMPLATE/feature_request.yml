@@ -1,0 +1,23 @@
+name: Feature request
+description: 機能提案・改善案
+title: "feat: "
+body:
+  - type: textarea
+    id: motivation
+    attributes:
+      label: 解決したい課題
+      description: どんな操作が不便ですか？
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 提案する動作
+      description: UI / Git 上の動作 / 想定する例外を説明してください
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 受け入れ条件
+      description: どうなれば実装完了と言えるでしょうか
