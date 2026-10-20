@@ -42,3 +42,23 @@ Status: **Proposed** / 2026-10-20
 - `git status --porcelain=v1 -z`, `git ls-files -z`, `git check-ignore`, `git check-attr` 等による事後確認を必須とする。
 - 1件でも内容破損や予期しない index 変更があればリリースを止める。
 - CI は Windows を最低限含める。Rust core の platform 非依存部分は Linux でもテストする。
+
+## CI / fixture 実装状況（Issue #3）
+
+Windows / Ubuntu それぞれで `cargo fmt --all -- --check`, `cargo build --workspace --locked`, `cargo clippy --workspace --all-targets --locked -- -D warnings`, `cargo test --workspace --all-targets --locked` を実行する設計。**ジョブが開始し各ステップが成功したことを確認するまで、Issue #3 のCI受け入れ条件は未達**と扱う。
+
+`crates/gitpick-core/tests/git_fixture.rs` は専用一時ディレクトリに `git init` する。すべての Git 呼び出しは fixture 専用の環境隔離を通し、親プロセスからの `GIT_*` 変数と明示的なGit環境変数指定を除去し、global/system Git config の読み込みを抑止する。テストで `GIT_DIR` や `GIT_INDEX_FILE` 等を意図的に汚染しても他のfixtureを変更しないことを検証する。
+
+### Fixture のテストIDと製品機能テストの対応
+
+| Fixture ID | テスト関数 | 検証範囲 | 将来の製品テスト（**未合格**） |
+| --- | --- | --- | --- |
+| F01 | `git_fixture_resolves_repository_and_preserves_special_names` | 本物のGitでUTF-8パスと `ls-files -z` を利用できる | G02, I04 |
+| F02 | `git_fixture_checks_ignore_without_touching_file_content` | Git標準のignore評価とファイル保持 | I01, I05 |
+| F03 | `git_fixture_can_detect_a_non_repository` | 非リポジトリからのGit応答を検証 | G01 |
+| F04 | `git_fixture_isolated_from_injected_git_environment` | 汚染されたGit環境でも他のテスト用repo/indexに影響しない | G03, S01 |
+| F05 | `git_fixture_lfs_tracks_selected_file_when_available` | `git lfs version` 成功環境のみ `git lfs track --filename` と `git check-attr` を検証 | L01, L02, L04 |
+
+**Fxxはテスト基盤そのものの検証ID**であり、Gxx / Ixx / Lxx / Sxx の GitPick 機能が実装・合格した意味ではない。特に F05 は Git LFS がない環境ではスキップする。CIで LFS が利用可能な環境を必須にする前に、導入有無とスキップ状況を確認する。
+
+本PRでIssue #3のLFS optional fixtureを用意する方針へ変更した。機能実装固有の LFS 検査（L01〜L04）はIssue #6で追加する。
