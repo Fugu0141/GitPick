@@ -42,3 +42,11 @@ Status: **Proposed** / 2026-10-20
 - `git status --porcelain=v1 -z`, `git ls-files -z`, `git check-ignore`, `git check-attr` 等による事後確認を必須とする。
 - 1件でも内容破損や予期しない index 変更があればリリースを止める。
 - CI は Windows を最低限含める。Rust core の platform 非依存部分は Linux でもテストする。
+
+## CI / fixture 実装状況（Issue #3）
+
+GitHub Actions で `ubuntu-latest` と `windows-latest` の各環境に対して `cargo fmt --all -- --check`、`cargo clippy --workspace --all-targets -- -D warnings`、`cargo test --workspace --all-targets` を実行する。
+
+`crates/gitpick-core/tests/git_fixture.rs` は、外部リポジトリではなく専用の一時ディレクトリに `git init` した Git fixture を構築し、`git ls-files -z` と `git check-ignore` の本物の振る舞いをテストする。
+
+**重要:** この時点の fixture はテスト基盤自体の検証であり、G01/G02/I01などの GitPick 機能が実装・合格したことを意味しない。それらは Issue #4〜#7 の実装に合わせて個別追加する。Git LFS fixture はコア機能に LFS 対応が入る段階でオプションとして追加する。

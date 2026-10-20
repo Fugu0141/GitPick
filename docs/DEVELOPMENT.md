@@ -47,4 +47,4 @@ gitpick apply <plan-file>
 - Gitコマンドの組み立てにシェル連結を使わない
 - テストは使い捨てリポジトリで行い、普段の作業ツリーを直接変更しない
 
-今後: Issue #3 で Git fixture / Windows・Linux CI を追加します。
+Issue #3: 使い捨て Git fixture と Windows / Linux 向けの format・Clippy・test CI を整備しています。実際の検証結果は GitHub Actions の各PRチェックを確認してください。
