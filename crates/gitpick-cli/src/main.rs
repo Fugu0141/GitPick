@@ -34,7 +34,7 @@ fn parse_args(args: Vec<OsString>) -> Result<CliCommand, String> {
                 return Err("scan requires at least one path".to_string());
             }
             Ok(CliCommand::Request(Request::Scan {
-                paths: args[1..].iter().map(PathBuf::from).collect(),
+                paths: args[1..].iter().cloned().map(PathBuf::from).collect(),
             }))
         }
         "plan" => {
@@ -50,7 +50,7 @@ fn parse_args(args: Vec<OsString>) -> Result<CliCommand, String> {
             };
             Ok(CliCommand::Request(Request::Plan {
                 action,
-                path: PathBuf::from(&args[2]),
+                path: PathBuf::from(args[2].clone()),
             }))
         }
         "apply" => {
@@ -58,7 +58,7 @@ fn parse_args(args: Vec<OsString>) -> Result<CliCommand, String> {
                 return Err("apply requires exactly one plan-file path".to_string());
             }
             Ok(CliCommand::Request(Request::Apply {
-                plan_path: PathBuf::from(&args[1]),
+                plan_path: PathBuf::from(args[1].clone()),
             }))
         }
         _ => Err("unknown command".to_string()),
