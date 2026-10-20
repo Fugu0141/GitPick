@@ -4,7 +4,7 @@
 Windows エクスプローラーの右クリックから、ファイルやフォルダーの Git 管理方法を選べるようにするツールです。
 
 > [!IMPORTANT]
-> **開発準備中 / Planning stage** — まだ動作するアプリ、インストーラー、リリースはありません。このリポジトリは初期設計を公開・管理するためのものです。
+> **開発初期 / Early development** — Rust コアと CLI のひな形を整備中です。現状の `scan` / `plan` / `apply` は未実装として安全に失敗します。Windows 用アプリ、インストーラー、リリースはまだありません。
 
 ## コンセプト
 
@@ -58,11 +58,12 @@ GitHub の通常の Git 管理では **50 MiB 超で警告、100 MiB 超でブ�
 - [安全設計](docs/SAFETY.md) — 破壊的操作を防ぐための要件
 - [ロードマップ](docs/ROADMAP.md) — 開発フェーズと実装順
 - [テスト計画](docs/TEST_PLAN.md) — 振る舞いとエッジケースの検証
+- [開発環境・CLI](docs/DEVELOPMENT.md) — 現在のコマンド仕様とビルド手順
 - [開発への参加](CONTRIBUTING.md) — Issue・PR の進め方
 
 ## 開発状況
 
-設計・Issue の分解を進めています。今はダウンロードして実行できる状態ではありません。実装の進行は [Issues](https://github.com/Fugu0141/GitPick/issues) で確認できます。
+Rust の CLI ひな形を実装中ですが、Git 管理設定を編集する機能は未実装です。今は実用アプリとしてダウンロードして使える状態ではありません。実装の進行は [Issues](https://github.com/Fugu0141/GitPick/issues) で確認できます。
 
 ## 参考資料
 

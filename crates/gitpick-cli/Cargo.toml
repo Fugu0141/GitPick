@@ -1,0 +1,12 @@
+[package]
+name = "gitpick-cli"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+gitpick-core = { path = "../gitpick-core" }
+
+[[bin]]
+name = "gitpick"
+path = "src/main.rs"
