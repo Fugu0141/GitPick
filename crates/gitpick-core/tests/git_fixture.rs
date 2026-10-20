@@ -15,7 +15,11 @@ static NEXT_ID: AtomicU64 = AtomicU64::new(0);
 /// environment overrides and immediately before spawn.
 fn isolate_git_environment(command: &mut Command, fixture_root: &Path) {
     for (name, _) in std::env::vars_os() {
-        if name.to_string_lossy().to_ascii_uppercase().starts_with("GIT_") {
+        if name
+            .to_string_lossy()
+            .to_ascii_uppercase()
+            .starts_with("GIT_")
+        {
             command.env_remove(name);
         }
     }
@@ -44,7 +48,10 @@ fn isolate_git_environment(command: &mut Command, fixture_root: &Path) {
 
     // Git may otherwise inherit a user's global/system aliases, hooks, or
     // filters. The designated global config file intentionally does not exist.
-    command.env("GIT_CONFIG_GLOBAL", fixture_root.join(".gitpick-no-global-config"));
+    command.env(
+        "GIT_CONFIG_GLOBAL",
+        fixture_root.join(".gitpick-no-global-config"),
+    );
     command.env("GIT_CONFIG_NOSYSTEM", "1");
 }
 
