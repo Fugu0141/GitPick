@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   build-and-test:
-    name: fmt, clippy, test (${{ matrix.os }})
+    name: build, fmt, clippy, test (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -25,7 +25,9 @@ jobs:
           components: rustfmt, clippy
       - name: Check formatting
         run: cargo fmt --all -- --check
+      - name: Build workspace
+        run: cargo build --workspace --locked
       - name: Run Clippy
-        run: cargo clippy --workspace --all-targets -- -D warnings
+        run: cargo clippy --workspace --all-targets --locked -- -D warnings
       - name: Run tests
-        run: cargo test --workspace --all-targets
+        run: cargo test --workspace --all-targets --locked
